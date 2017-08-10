@@ -1,8 +1,18 @@
 import React from 'react';
 
-import { AppRegistry, Text, TextInput, TouchableHighlight, View, Image, StyleSheet } from 'react-native';
-
-export default class Login extends React.Component {
+import { AppRegistry
+	, Text
+	, TextInput
+	, TouchableHighlight
+	, View
+	, Image
+	, StyleSheet
+	, Component
+	 } from 'react-native';
+ class Login extends React.Component {
+ 	constructor(props){
+ 		super(props);
+ 	}
     render() {
         return (
         <View style={styles.container}>
