@@ -13,7 +13,7 @@ var {
 	, ActivityIndicator
 } = ReactNative;
 var TimerMixin = require('react-timer-mixin');
-
+var buffer = require('buffer');
 
 import { AppRegistry
 
@@ -32,7 +32,7 @@ import { AppRegistry
 	        	source={{ uri: "Octocat", isStatic: true }} />
 	        <Text style={styles.heading}>Jamie's Totally Rad {"\n"}Github Browser</Text>
 	        <TextInput style={styles.input}
-	        	// onChangeText={(text)=> this.setState({username: text})}
+	        	onChangeText={(text)=> this.setState({username: text})}
 	        	placeholder="Github Username" />
 	        <TextInput style={styles.input}
 	        onChangeText={(text)=> this.setState({password: text})}
@@ -52,7 +52,15 @@ import { AppRegistry
     	console.log('Attempting to login username ' + this.state.username);
     	this.setState({showProgress: true});
 
-    	fetch('https:api.github.com/search/repositories?q=react')
+    	var b = new buffer.Buffer(this.state.username + ':' + this.state.password);
+    	
+    	var encodeAuth = b.toString('base64');
+
+    	fetch('https:api.github.com/user', {
+    		headers: {
+    			'Authorization' : 'Basic ' + encodeAuth
+    		}
+    	})
     	.then((response)=> {
     		return response.json();
     	})
