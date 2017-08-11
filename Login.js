@@ -1,17 +1,29 @@
-import React from 'react';
+'use strict';
 
-import { AppRegistry
-	, Text
+var React = require('react');
+var ReactNative = require('react-native');
+var {
+	 Text
 	, TextInput
 	, TouchableHighlight
 	, View
 	, Image
 	, StyleSheet
 	, Component
+	, ActivityIndicator
+} = ReactNative;
+var TimerMixin = require('react-timer-mixin');
+
+
+import { AppRegistry
+
 	 } from 'react-native';
  class Login extends React.Component {
  	constructor(props){
  		super(props);
+ 		this.state = {
+ 			showProgress: false
+ 		}
  	}
     render() {
         return (
@@ -20,16 +32,24 @@ import { AppRegistry
 	        	source={{ uri: "Octocat", isStatic: true }} />
 	        <Text style={styles.heading}>Jamie's Totally Rad {"\n"}Github Browser</Text>
 	        <TextInput style={styles.input}
+	        	// onChangeText={(text)=> this.setState({username: text})}
 	        	placeholder="Github Username" />
 	        <TextInput style={styles.input}
-	        	placeholder="Github Password" secureTextEntry="true"/>
-	        <TouchableHighlight style={styles.button}>
+	        onChangeText={(text)=> this.setState({password: text})}
+	        	placeholder="Github Password" secureTextEntry={ true }/>
+	        <TouchableHighlight style={styles.button} onPress={this.onLoginPressed.bind(this)}>
 	        	<Text style={styles.buttonText}>
 	        		Login
 	        	</Text>
         	</ TouchableHighlight>
+        	<ActivityIndicator animating={this.state.showProgress} size="large" />
+        	
         </View>
         );
+    }
+    onLoginPressed(){
+    	console.log('Attempting to login username ' + this.state.username);
+    	this.setState({showProgress: true});
     }
 } 
 

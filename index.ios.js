@@ -14,13 +14,24 @@ import {
 
 var Login = require('./Login');
 
-var GithubBrowser = React.createClass({
-  render: function(){
-    return(
-      <Login />
-      );
+// var GithubBrowser = React.createClass({
+//   render: function(){
+//     return(
+      
+//       );
+//   }
+// });
+
+class GithubBrowser extends React.Component {
+  constructor(props){
+    super(props);
   }
-});
+    render() {
+        return (
+        <Login />
+        );
+    }
+} 
 
 const styles = StyleSheet.create({
   container: {
