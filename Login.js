@@ -42,7 +42,8 @@ import { AppRegistry
 	        		Login
 	        	</Text>
         	</ TouchableHighlight>
-        	<ActivityIndicator animating={this.state.showProgress} size="large" />
+        	<ActivityIndicator animating={this.state.showProgress} size="large"
+        	style = {styles.loader} />
         	
         </View>
         );
@@ -50,6 +51,15 @@ import { AppRegistry
     onLoginPressed(){
     	console.log('Attempting to login username ' + this.state.username);
     	this.setState({showProgress: true});
+
+    	fetch('https:api.github.com/search/repositories?q=react')
+    	.then((response)=> {
+    		return response.json();
+    	})
+    	.then((results)=> {
+    		console.log(results);
+    		this.setState({showProgress: false});
+    	});
     }
 } 
 
@@ -90,6 +100,10 @@ var styles = StyleSheet.create({
 		fontSize: 22,
 		color: '#FFF',
 		alignSelf: 'center'
+	},
+	loader: {
+
+		marginTop:20
 	}
 })
 
