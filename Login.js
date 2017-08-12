@@ -43,8 +43,7 @@ import { AppRegistry
 	        	</Text>
         	</ TouchableHighlight>
         	<ActivityIndicator animating={this.state.showProgress} size="large"
-        	style = {styles.loader} />
-        	
+        	style = {styles.loader} />	
         </View>
         );
     }
@@ -62,11 +61,32 @@ import { AppRegistry
     		}
     	})
     	.then((response)=> {
+    		if(response.status >= 200 && response.status < 300){
+    			return response;
+    		}
+    		if(response.status == 401){
+    			throw {
+    				badCredentials: response.status == 401,
+    				unknownError: response.status != 401
+    			}
+    		}
+
+    		throw 'Unknown error'
+    	})
+    	.then((response)=> {
     		return response.json();
     	})
     	.then((results)=> {
     		console.log(results);
     		this.setState({showProgress: false});
+    	})
+    	.catch((err)=> {
+    		console.log('login failed: ' + err);
+    		this.setState(err);
+    	})
+    	.finally(()=> {
+    		this.setState({showProgress:false});
+    		this.setState({animating: false});
     	});
     }
 } 
