@@ -26,11 +26,29 @@ import { AppRegistry
  		}
  	}
     render() {
+
+    	var errorCtrl = <View />;
+
+    	if(this.state.badCredentials){
+    		errorCtrl = 
+    		<Text style={styles.error}>
+    			The username and password provided did not work.
+    		</Text>;
+    	}
+
+    	if(this.state.unknownError){
+    		errorCtrl = 
+    		<Text style={styles.error}>
+    			Unexpected issue encountered.
+    		</Text>;
+    	}
+
         return (
         <View style={styles.container}>
 	        <Image style= {styles.logo}
 	        	source={{ uri: "Octocat", isStatic: true }} />
 	        <Text style={styles.heading}>Jamie's Totally Rad {"\n"}Github Browser</Text>
+
 	        <TextInput style={styles.input}
 	        	onChangeText={(text)=> this.setState({username: text})}
 	        	placeholder="Github Username" />
@@ -42,6 +60,7 @@ import { AppRegistry
 	        		Login
 	        	</Text>
         	</ TouchableHighlight>
+        	{errorCtrl}
         	<ActivityIndicator animating={this.state.showProgress} size="large"
         	style = {styles.loader} />	
         </View>
